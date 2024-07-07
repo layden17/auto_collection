@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car List</title>
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Car List</h1>
+    <a href="{% url 'car_create' %}">Add new car</a>
+    <form method="get" action="{% url 'car_list' %}">
+        <select name="filter_by">
+            <option value="brand" {% if request.GET.filter_by == 'brand' %}selected{% endif %}>Marque</option>
+            <option value="model" {% if request.GET.filter_by == 'model' %}selected{% endif %}>Modèle</option>
+            <option value="year" {% if request.GET.filter_by == 'year' %}selected{% endif %}>Année</option>
+            <option value="price" {% if request.GET.filter_by == 'price' %}selected{% endif %}>Prix</option>
+        </select>
+        <input type="text" name="query" value="{{ request.GET.query }}" placeholder="Rechercher...">
+        <button type="submit">Rechercher</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in cars %}
+                <tr>
+                    <td>{{ car.brand }}</td>
+                    <td>{{ car.model }}</td>
+                    <td>{{ car.year }}</td>
+                    <td>{{ car.price }}</td>
+                    <td>
+                        <a href="{% url 'car_update' car.pk %}">Edit</a>
+                        <a href="{% url 'car_delete' car.pk %}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

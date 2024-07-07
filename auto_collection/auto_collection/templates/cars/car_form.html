@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Form</title>
+</head>
+<body>
+    <h1>{{ form.instance.pk|yesno:"Edit Car,Add Car" }}</h1>
+    <form method="post">
+        {% csrf_token %}
+    <div>
+        {{ form.brand.errors }}
+        {{ form.brand.label_tag }}
+        {{ form.brand }}
+    </div>
+    <div>
+        {{ form.model.errors }}
+        {{ form.model.label_tag }}
+        {{ form.model }}
+    </div>
+    <div>
+        {{ form.year.errors }}
+        {{ form.year.label_tag }}
+        {{ form.year }}
+    </div>
+    <div>
+        {{ form.price.errors }}
+        {{ form.price.label_tag }}
+        {{ form.price }}
+    </div>
+    <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'car_list' %}">Cancel</a>
+</body>
+</html>
